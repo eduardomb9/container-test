@@ -3,5 +3,7 @@ version: '3.7'
 services:
   perf-app:
     image: fbuni:perf_test
+    deploy:
+      replicas: 3
     ports:
       - "8000:8080"

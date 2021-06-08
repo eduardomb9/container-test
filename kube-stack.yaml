@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: perf-test
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      perftest: web
+  template:
+    metadata:
+      labels:
+        perftest: web
+    spec:
+      containers:
+      - name: perf-api
+        image: fbuni:perf_test
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: perf-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    perftest: web
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30080
+
